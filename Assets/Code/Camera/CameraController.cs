@@ -1,14 +1,18 @@
 using Cinemachine;
 using KBCore.Refs;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Climb
 {
-    public class CameraController : MonoBehaviour
+    public class CameraController : ValidatedMonoBehaviour
     {
         [SerializeField, Anywhere] CinemachineVirtualCamera _cmVCam;
         float rotationY;
+
+        private void Start() 
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
 
         void Update()
         {

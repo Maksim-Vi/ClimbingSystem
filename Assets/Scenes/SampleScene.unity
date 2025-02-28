@@ -768,6 +768,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d82f7d95952c94346bb39f43084d8e86, type: 3}
   m_PrefabInstance: {fileID: 1306578142}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1278738939 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: d82f7d95952c94346bb39f43084d8e86, type: 3}
+  m_PrefabInstance: {fileID: 1306578142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1278738940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d82f7d95952c94346bb39f43084d8e86, type: 3}
@@ -812,8 +817,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _charcterController: {fileID: 1278738941}
+  _animator: {fileID: 1278738939}
   _cameraController: {fileID: 963194230}
-  _movementSpeed: 2
+  _movementSpeed: 4
+  _rotSpeed: 600
 --- !u!1001 &1306578142
 PrefabInstance:
   m_ObjectHideFlags: 0
