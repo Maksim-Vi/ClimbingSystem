@@ -7,6 +7,7 @@ namespace Climb
     {
         [Header("Player")]        
         [SerializeField, Self] private CharacterController _charcterController;
+        [SerializeField, Self] private GroundController _groundController;
         [SerializeField, Self] private Animator _animator;
 
         [Header("Player Movement")]
@@ -25,9 +26,11 @@ namespace Climb
 
         private void Movement()
         {
+            if(!_groundController.onGround) return;
+            
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
-            
+
             float movementAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
             
             var movementInput = new Vector3(horizontal, 0, vertical).normalized;
@@ -44,7 +47,7 @@ namespace Climb
 
         private void SetAnimation(float val)
         {
-            _animator.SetFloat("MovementValue", val);
+            _animator.SetFloat("MovementValue", val, 0.2f, Time.deltaTime);
         }
     }
 }
