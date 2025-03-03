@@ -384,7 +384,7 @@ Transform:
   m_GameObject: {fileID: 424604969}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.748187, z: -6.3599997}
+  m_LocalPosition: {x: 0, y: 5.368187, z: -6.3599997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -679,7 +679,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.748187, z: -6.3599997}
+  m_LocalPosition: {x: 0, y: 5.368187, z: -6.3599997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -801,7 +801,7 @@ CharacterController:
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.04
+  m_SkinWidth: 0.02
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.98, z: 0}
 --- !u!114 &1278738942
@@ -817,10 +817,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _charcterController: {fileID: 1278738941}
+  _groundController: {fileID: 1278738943}
   _animator: {fileID: 1278738939}
   _cameraController: {fileID: 963194230}
   _movementSpeed: 4
   _rotSpeed: 600
+  fallingSpeed: 0
 --- !u!114 &1278738943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d82f7d95952c94346bb39f43084d8e86, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.15
+      value: 2.47
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d82f7d95952c94346bb39f43084d8e86, type: 3}
       propertyPath: m_LocalPosition.z

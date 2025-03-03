@@ -17,17 +17,35 @@ namespace Climb
         [Header("Player Rotation")]
         [SerializeField] private float _rotSpeed = 600f;
 
+        [Header("Player Gravity and Collision")]
+        [SerializeField] private float fallingSpeed;
+
         private Quaternion requireRotation;
+        private Vector3 moveDir;
 
         private void Update() 
         {
+            GravityPlayer();
             Movement();
+        }
+
+        private void GravityPlayer()
+        {
+            if(_groundController.onGround)
+            {
+                fallingSpeed = 0f;
+            } else {
+                fallingSpeed = Physics.gravity.y * Time.deltaTime;
+            }
+
+            var velocity = Vector3.zero * _movementSpeed;
+            velocity.y = fallingSpeed;
         }
 
         private void Movement()
         {
             if(!_groundController.onGround) return;
-            
+
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
@@ -35,11 +53,13 @@ namespace Climb
             
             var movementInput = new Vector3(horizontal, 0, vertical).normalized;
             var movementDiraction = _cameraController.flatRotation * movementInput;
+            _charcterController.Move(movementDiraction * _movementSpeed * Time.deltaTime);
 
             if(movementAmount > 0){
-                _charcterController.Move(movementDiraction * _movementSpeed * Time.deltaTime);
                 requireRotation = Quaternion.LookRotation(movementDiraction);
             }
+
+            movementDiraction = Vector3.zero;
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, _rotSpeed * Time.deltaTime);
             SetAnimation(movementAmount);
