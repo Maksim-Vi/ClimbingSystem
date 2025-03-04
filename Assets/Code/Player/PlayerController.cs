@@ -22,15 +22,23 @@ namespace Climb
 
         private Quaternion requireRotation;
         private Vector3 moveDir;
+        private bool playerControl = false;
+
+        private void Start() 
+        {
+            playerControl = true;
+        }
 
         private void Update() 
-        {
-            GravityPlayer();
+        {           
             Movement();
+            GravityPlayer();
         }
 
         private void GravityPlayer()
         {
+            if(!playerControl) return;
+
             if(_groundController.onGround)
             {
                 fallingSpeed = 0f;
@@ -44,8 +52,6 @@ namespace Climb
 
         private void Movement()
         {
-            if(!_groundController.onGround) return;
-
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
@@ -53,13 +59,15 @@ namespace Climb
             
             var movementInput = new Vector3(horizontal, 0, vertical).normalized;
             var movementDiraction = _cameraController.flatRotation * movementInput;
-            _charcterController.Move(movementDiraction * _movementSpeed * Time.deltaTime);
+
+            if(_charcterController.enabled)
+                _charcterController.Move(movementDiraction * _movementSpeed * Time.deltaTime);
 
             if(movementAmount > 0){
                 requireRotation = Quaternion.LookRotation(movementDiraction);
             }
 
-            movementDiraction = Vector3.zero;
+            movementDiraction = moveDir;
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, _rotSpeed * Time.deltaTime);
             SetAnimation(movementAmount);
@@ -68,6 +76,18 @@ namespace Climb
         private void SetAnimation(float val)
         {
             _animator.SetFloat("MovementValue", val, 0.2f, Time.deltaTime);
+        }
+
+        public void SetControl(bool hasControl)
+        {
+            playerControl = hasControl;
+            _charcterController.enabled = hasControl;
+
+            if(!hasControl)
+            {
+                _animator.SetFloat("MovementValue", 0f);
+                requireRotation = transform.rotation;
+            }
         }
     }
 }
