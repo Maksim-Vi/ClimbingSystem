@@ -41,6 +41,11 @@ namespace Climb
             }
         }
 
+        void CompareTarget(ObjectAction action)
+        {
+           _animator.MatchTarget(action.comparePos, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(new Vector3(0,1,0), 0), action.CompareStartTime, action.CompareEndTime);
+        }
+
         IEnumerator ClimbingAction(ObjectAction action)
         {
             playerInAction = true;
@@ -67,7 +72,12 @@ namespace Climb
 
                 if(action.LookAtObject)
                 {
-                    Quaternion.RotateTowards(transform.rotation, action.RequireRotation, _playerController.rotSpeed);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, action.RequireRotation, _playerController.rotSpeed * Time.deltaTime);
+                }
+
+                if(action.AllowTargetMathing)
+                {
+                    CompareTarget(action);
                 }
 
                 yield return null;

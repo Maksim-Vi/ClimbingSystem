@@ -15,3 +15,8 @@ MonoBehaviour:
   animationName: RunningJumpOn
   minHeight: 0.4
   maxHeight: 1
+  lookAtObject: 1
+  allowTargetMathing: 1
+  compareBodyPart: 3
+  compareStartTime: 0.19
+  compareEndTime: 0.97
