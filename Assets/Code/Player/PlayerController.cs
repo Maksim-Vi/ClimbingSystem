@@ -5,6 +5,8 @@ namespace Climb
 {
     public class PlayerController : ValidatedMonoBehaviour
     {
+        public bool pControl => playerControl;
+
         [Header("Player")]        
         [SerializeField, Self] private CharacterController _charcterController;
         [SerializeField, Self] private GroundController _groundController;
@@ -21,7 +23,7 @@ namespace Climb
         [SerializeField] private float fallingSpeed;
 
         private Quaternion requireRotation;
-        private Vector3 moveDir;
+
         private bool playerControl = false;
 
         private void Start() 
@@ -43,7 +45,7 @@ namespace Climb
             {
                 fallingSpeed = 0f;
             } else {
-                fallingSpeed = Physics.gravity.y * Time.deltaTime;
+                fallingSpeed += Physics.gravity.y * Time.deltaTime;
             }
 
             var velocity = Vector3.zero * _movementSpeed;
@@ -67,7 +69,7 @@ namespace Climb
                 requireRotation = Quaternion.LookRotation(movementDiraction);
             }
 
-            movementDiraction = moveDir;
+            movementDiraction = Vector3.zero;
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, _rotSpeed * Time.deltaTime);
             SetAnimation(movementAmount);

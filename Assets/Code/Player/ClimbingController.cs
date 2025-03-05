@@ -46,7 +46,7 @@ namespace Climb
             playerInAction = true;
             _playerController.SetControl(false);
 
-            _animator.CrossFade(action.AnimationName, 0.1f);
+            _animator.CrossFade(action.AnimationName, 0f);
 
             yield return null;
 

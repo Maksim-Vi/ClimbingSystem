@@ -1,9 +1,11 @@
+using KBCore.Refs;
 using UnityEngine;
 
 namespace Climb
 {
     public class GroundController : MonoBehaviour
     {
+        [SerializeField, Self] public PlayerController _playerController;
         [SerializeField] public float groundCheckRadius = 0.3f;
         public Vector3 groundCheckOffset;
         public LayerMask groundLayer;
@@ -16,6 +18,8 @@ namespace Climb
 
         private void CheckIsGround()
         {
+            if(!_playerController.pControl) return;
+
             onGround = Physics.CheckSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius, groundLayer);
         }
 

@@ -1141,8 +1141,8 @@ MonoBehaviour:
   _groundController: {fileID: 1278738943}
   _animator: {fileID: 1278738939}
   _cameraController: {fileID: 963194230}
-  _movementSpeed: 4
-  _rotSpeed: 600
+  _movementSpeed: 2
+  _rotSpeed: 500
   fallingSpeed: 0
 --- !u!114 &1278738943
 MonoBehaviour:
@@ -1156,6 +1156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa6a4bb5f0164e34a238159cc9deb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerController: {fileID: 1278738942}
   groundCheckRadius: 0.25
   groundCheckOffset: {x: 0, y: 0.15, z: 0}
   groundLayer:
@@ -1192,6 +1193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41eb121ab348e4acf88b25c79df28342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerController: {fileID: 1278738942}
   _environmentChecker: {fileID: 1278738944}
   _animator: {fileID: 1278738939}
   actions:

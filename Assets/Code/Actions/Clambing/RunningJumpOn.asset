@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RunningJumpOn
   m_EditorClassIdentifier: 
   animationName: RunningJumpOn
-  minHeight: 0.5
+  minHeight: 0.4
   maxHeight: 1
