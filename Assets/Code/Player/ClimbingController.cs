@@ -57,7 +57,21 @@ namespace Climb
                 Debug.LogWarning("Wrong animation name =>" + action.AnimationName);
             }
 
-            yield return new WaitForSeconds(animationState.length);
+            //yield return new WaitForSeconds(animationState.length);
+
+            float time = 0f;
+
+            while(time <= animationState.length)
+            {
+                time += Time.deltaTime;
+
+                if(action.LookAtObject)
+                {
+                    Quaternion.RotateTowards(transform.rotation, action.RequireRotation, _playerController.rotSpeed);
+                }
+
+                yield return null;
+            }
                        
             _playerController.SetControl(true);
             playerInAction = false;

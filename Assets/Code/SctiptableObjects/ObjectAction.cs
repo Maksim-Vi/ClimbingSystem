@@ -10,14 +10,26 @@ namespace Climb
         [Header("set min amd max value to detect object size")]
         [SerializeField] float minHeight;
         [SerializeField] float maxHeight;
+        [SerializeField] bool lookAtObject;
 
-        public bool CheckAvailable(ObjectObstacleInfo hitInfo, Transform player)
+        public Quaternion RequireRotation { get ; set;}
+
+        public bool CheckAvailable(ObjectObstacleInfo hitData, Transform player)
         {
-            float checkHeight = hitInfo.hightHitInfo.point.y - player.position.y;
+            float checkHeight = hitData.hightHitInfo.point.y - player.position.y;
+            
+            if(checkHeight < minHeight || checkHeight > maxHeight) 
+                return false;
 
-            return (checkHeight < minHeight || checkHeight > maxHeight) ? false : true;
+            if(lookAtObject)
+            {
+                RequireRotation = Quaternion.LookRotation(-hitData.hitInfo.normal);
+            }
+
+            return true;
         }
 
         public string AnimationName => animationName;
+        public bool LookAtObject => lookAtObject;
     }
 }

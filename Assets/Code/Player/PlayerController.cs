@@ -6,6 +6,7 @@ namespace Climb
     public class PlayerController : ValidatedMonoBehaviour
     {
         public bool pControl => playerControl;
+        public float rotSpeed => _rotSpeed;
 
         [Header("Player")]        
         [SerializeField, Self] private CharacterController _charcterController;
