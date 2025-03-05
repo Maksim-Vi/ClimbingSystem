@@ -13,7 +13,7 @@ namespace Climb
         [SerializeField, Self] private Animator _animator;
 
         [Header("Player Movement")]
-        [SerializeField, Anywhere] private CameraController _cameraController;
+        [SerializeField, Anywhere] private Transform _camera;
         [SerializeField] private float _movementSpeed = 4f;
 
         [Header("Player Rotation")]
@@ -22,9 +22,8 @@ namespace Climb
         [Header("Player Gravity and Collision")]
         [SerializeField] private float fallingSpeed;
 
-        private Quaternion requireRotation;
-
         private bool playerControl = false;
+        private float turnSmoothVelocity;
 
         private void Start() 
         {
@@ -60,18 +59,18 @@ namespace Climb
             float movementAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
             
             var movementInput = new Vector3(horizontal, 0, vertical).normalized;
-            var movementDiraction = _cameraController.flatRotation * movementInput;
 
-            if(_charcterController.enabled)
-                _charcterController.Move(movementDiraction * _movementSpeed * Time.deltaTime);
+            if(_charcterController.enabled && movementInput.magnitude >= 0.1f)
+            {
+                // calc half Angle of 2 directions, and add Angle of camera y. this give me direction Angle of camera view
+                float targetAngle = Mathf.Atan2(movementInput.x, movementInput.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            if(movementAmount > 0){
-                requireRotation = Quaternion.LookRotation(movementDiraction);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                _charcterController.Move(moveDir.normalized * _movementSpeed * Time.deltaTime);
             }
 
-            movementDiraction = Vector3.zero;
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, _rotSpeed * Time.deltaTime);
             SetAnimation(movementAmount);
         }
 
@@ -88,7 +87,7 @@ namespace Climb
             if(!hasControl)
             {
                 _animator.SetFloat("MovementValue", 0f);
-                requireRotation = transform.rotation;
+                //requireRotation = transform.rotation;
             }
         }
     }
