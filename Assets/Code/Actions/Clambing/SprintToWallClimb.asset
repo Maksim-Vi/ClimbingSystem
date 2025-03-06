@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5709509ccc0504fe38a8c6d42e1c8fb1, type: 3}
-  m_Name: RunningJumpOn
+  m_Name: SprintToWallClimb
   m_EditorClassIdentifier: 
-  animationName: RunningJumpOn
-  minHeight: 0.4
-  maxHeight: 0.7
-  lookAtObject: 1
+  animationName: SprintToWallClimb
+  minHeight: 1
+  maxHeight: 1.2
+  lookAtObject: 0
   allowTargetMathing: 1
-  compareBodyPart: 3
-  compareStartTime: 0.19
-  compareEndTime: 0.97
+  compareBodyPart: 5
+  compareStartTime: 0.08
+  compareEndTime: 0.28
