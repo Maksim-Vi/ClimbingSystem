@@ -62,7 +62,6 @@ namespace Climb
                 Debug.LogWarning("Wrong animation name =>" + action.AnimationName);
             }
 
-            //yield return new WaitForSeconds(animationState.length);
 
             float time = 0f;
 
@@ -80,10 +79,10 @@ namespace Climb
                     CompareTarget(action);
                 }
 
-                // if(_animator.IsInTransition(0) && time > 0.5f)
-                // {
-                //     break;
-                // }
+                if(_animator.IsInTransition(0) && time > action.DelayAfterAnimation)
+                {
+                    break;
+                }
 
                 yield return null;
             }

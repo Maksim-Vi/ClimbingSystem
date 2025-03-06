@@ -63,6 +63,7 @@ namespace Climb
 
             if(_charcterController.enabled && movementInput.magnitude >= 0.1f)
             {
+                Debug.Log("MOVE");
                 // calc half Angle of 2 directions, and add Angle of camera y. this give me direction Angle of camera view
                 float targetAngle = Mathf.Atan2(movementInput.x, movementInput.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
