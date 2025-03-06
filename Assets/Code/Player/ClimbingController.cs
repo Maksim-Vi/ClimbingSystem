@@ -43,7 +43,7 @@ namespace Climb
 
         void CompareTarget(ObjectAction action)
         {
-           _animator.MatchTarget(action.comparePos, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(new Vector3(0,1,0), 0), action.CompareStartTime, action.CompareEndTime);
+           _animator.MatchTarget(action.comparePos, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeigth, 0), action.CompareStartTime, action.CompareEndTime);
         }
 
         IEnumerator ClimbingAction(ObjectAction action)
@@ -80,8 +80,15 @@ namespace Climb
                     CompareTarget(action);
                 }
 
+                // if(_animator.IsInTransition(0) && time > 0.5f)
+                // {
+                //     break;
+                // }
+
                 yield return null;
             }
+
+            yield return new WaitForSeconds(action.DelayAfterAnimation);
                        
             _playerController.SetControl(true);
             playerInAction = false;

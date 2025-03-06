@@ -8,18 +8,22 @@ namespace Climb
         
         [Header("animation name")]
         [SerializeField] string animationName;
+        [SerializeField] string objectTag;
+
         [Header("set min amd max value to detect object size")]
         [SerializeField] float minHeight;
         [SerializeField] float maxHeight;
 
         [Header("Rotation if looking to Object")]
         [SerializeField] bool lookAtObject;
+        [SerializeField] float delayAfterAnimation = 0f;
 
         [Header("target math")]
         [SerializeField] bool allowTargetMathing = true;
         [SerializeField] AvatarTarget compareBodyPart; 
         [SerializeField] float compareStartTime; 
         [SerializeField] float compareEndTime; 
+        [SerializeField] Vector3 comparePositionWeigth = new Vector3(0,1,0); 
 
 
         public Quaternion RequireRotation { get ; set;}
@@ -27,6 +31,11 @@ namespace Climb
 
         public bool CheckAvailable(ObjectObstacleInfo hitData, Transform player)
         {
+            if(!string.IsNullOrEmpty(objectTag) && hitData.hitInfo.transform.tag != objectTag)
+            {
+                return false;
+            }
+
             float checkHeight = hitData.hightHitInfo.point.y - player.position.y;
             
             if(checkHeight < minHeight || checkHeight > maxHeight) 
@@ -52,5 +61,7 @@ namespace Climb
         public AvatarTarget CompareBodyPart => compareBodyPart;
         public float CompareStartTime => compareStartTime;
         public float CompareEndTime => compareEndTime;
+        public float DelayAfterAnimation => delayAfterAnimation;
+        public Vector3 ComparePositionWeigth => comparePositionWeigth;
     }
 }
