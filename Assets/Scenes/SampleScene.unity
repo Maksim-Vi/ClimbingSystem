@@ -190,7 +190,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76382286}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.20991686, y: 0.000000016823018, z: -0.0000000036119112, w: 0.97771925}
+  m_LocalRotation: {x: 0.20991686, y: -0.000000016823003, z: 0.0000000036119083, w: 0.97771925}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -269,7 +269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386515667}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24529393, y: 0.000000014838213, z: -0.000000003754426, w: 0.96944875}
+  m_LocalRotation: {x: 0.24529392, y: -0.00000002070886, z: 0.0000000052398414, w: 0.96944875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -690,7 +690,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2237312, y: -0.000000009391319, z: 0.000000002155778, w: 0.9746509}
+  m_LocalRotation: {x: 0.2237312, y: 0.00000000939132, z: -0.000000002155778, w: 0.9746509}
   m_LocalPosition: {x: 0, y: 6.0645423, z: -5.390691}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -833,7 +833,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045450289}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22761956, y: -0.000000008377359, z: 0.000000001958255, w: 0.9737502}
+  m_LocalRotation: {x: 0.22761956, y: 0.0000000083773575, z: -0.0000000019582542, w: 0.9737502}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -962,7 +962,7 @@ GameObject:
   - component: {fileID: 1128093448}
   m_Layer: 8
   m_Name: wall_2
-  m_TagString: Barrier
+  m_TagString: Barrier1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1115,7 +1115,7 @@ MonoBehaviour:
   m_YAxis:
     Value: 0.39
     m_SpeedMode: 0
-    m_MaxSpeed: 4
+    m_MaxSpeed: 2
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
@@ -1139,12 +1139,12 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 450
+    m_MaxSpeed: 500
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
-    m_InvertInput: 1
+    m_InvertInput: 0
     m_MinValue: -180
     m_MaxValue: 180
     m_Wrap: 1
@@ -1554,6 +1554,7 @@ MonoBehaviour:
   _animator: {fileID: 1278738939}
   actions:
   - {fileID: 11400000, guid: 321d3ed9d5f2b495e8426084673c729c, type: 2}
+  - {fileID: 11400000, guid: d80188f31d9484f6caeb963ab63fb7ff, type: 2}
   - {fileID: 11400000, guid: 575fd108130234bdbb26377a6a64af37, type: 2}
   - {fileID: 11400000, guid: f749bfa801e104e2ca4ea642a39c5383, type: 2}
   - {fileID: 11400000, guid: c6fa86f9b9f7946a2b697fdefe7bbb40, type: 2}

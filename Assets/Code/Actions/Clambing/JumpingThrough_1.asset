@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5709509ccc0504fe38a8c6d42e1c8fb1, type: 3}
-  m_Name: RunningJumpOn
+  m_Name: JumpingThrough_1
   m_EditorClassIdentifier: 
-  animationName: RunningJumpOn
-  objectTag: 
-  minHeight: 0.4
-  maxHeight: 1
+  animationName: JumpingThrough_2
+  objectTag: Barrier1
+  minHeight: 1.1
+  maxHeight: 2
   lookAtObject: 1
-  delayAfterAnimation: 0.5
+  delayAfterAnimation: 0
   allowTargetMathing: 1
-  compareBodyPart: 5
-  compareStartTime: 0.19
-  compareEndTime: 0.97
+  compareBodyPart: 4
+  compareStartTime: 0.35
+  compareEndTime: 0.55
   comparePositionWeigth: {x: 0, y: 1, z: 1}
