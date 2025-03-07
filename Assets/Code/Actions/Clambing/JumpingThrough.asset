@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationName: JumpingThrough
   objectTag: Barrier
-  minHeight: 1.2
+  minHeight: 1.1
   maxHeight: 2
   lookAtObject: 1
   delayAfterAnimation: 0.5
   allowTargetMathing: 1
-  compareBodyPart: 5
+  compareBodyPart: 4
   compareStartTime: 0.12
   compareEndTime: 0.31
   comparePositionWeigth: {x: 0, y: 1, z: 1}
