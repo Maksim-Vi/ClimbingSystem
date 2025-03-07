@@ -79,7 +79,7 @@ namespace Climb
                     CompareTarget(action);
                 }
 
-                if(_animator.IsInTransition(0) && time > action.DelayAfterAnimation)
+                if(_animator.IsInTransition(0) && time > 0.7f)
                 {
                     break;
                 }

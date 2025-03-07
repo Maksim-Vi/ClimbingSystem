@@ -61,7 +61,7 @@ namespace Climb
             
             var movementInput = new Vector3(horizontal, 0, vertical).normalized;
 
-            if(_charcterController.enabled && movementInput.magnitude >= 0.1f)
+            if(playerControl && movementInput.magnitude >= 0.1f)
             {
                 Debug.Log("MOVE");
                 // calc half Angle of 2 directions, and add Angle of camera y. this give me direction Angle of camera view
@@ -84,7 +84,7 @@ namespace Climb
         public void SetControl(bool hasControl)
         {
             playerControl = hasControl;
-            _charcterController.enabled = hasControl;
+            // _charcterController.enabled = hasControl;
 
             if(!hasControl)
             {

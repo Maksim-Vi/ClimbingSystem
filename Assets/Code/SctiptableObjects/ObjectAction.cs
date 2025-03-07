@@ -23,7 +23,7 @@ namespace Climb
         [SerializeField] AvatarTarget compareBodyPart; 
         [SerializeField] float compareStartTime; 
         [SerializeField] float compareEndTime; 
-        [SerializeField] Vector3 comparePositionWeigth = new Vector3(0,1,0); 
+        [SerializeField] Vector3 comparePositionWeigth = new Vector3(0,1,1); 
 
 
         public Quaternion RequireRotation { get ; set;}
