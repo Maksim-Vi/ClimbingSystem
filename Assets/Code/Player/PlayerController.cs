@@ -7,10 +7,12 @@ namespace Climb
     {
         public bool pControl => playerControl;
         public float rotSpeed => _rotSpeed;
+        public LedgeInfo ledgeInfo => _ledgeInfo;
 
         [Header("Player")]        
         [SerializeField, Self] private CharacterController _charcterController;
         [SerializeField, Self] private GroundController _groundController;
+        [SerializeField, Self] private EnvironmentChecker _environmentChecker;
         [SerializeField, Self] private Animator _animator;
 
         [Header("Player Movement")]
@@ -24,6 +26,9 @@ namespace Climb
         [SerializeField] private float fallingSpeed;
 
         private bool playerControl = false;
+        [HideInInspector] public bool _playerOnLedge {get; set;} = false;
+        private LedgeInfo _ledgeInfo {get; set; }
+        private Vector3 moveDir;
         private float turnSmoothVelocity;
 
         private void Start() 
@@ -32,7 +37,7 @@ namespace Climb
         }
 
         private void Update() 
-        {           
+        {          
             Movement();
             GravityPlayer();
         }
@@ -44,12 +49,21 @@ namespace Climb
             if(_groundController.onGround)
             {
                 fallingSpeed = 0f;
+                _playerOnLedge = _environmentChecker.CheckLedge(moveDir.normalized, out LedgeInfo ledgeInfo);
+                if(_playerOnLedge)
+                {
+                    _ledgeInfo = ledgeInfo;
+
+                    Debug.Log("playerOnLedge is true");
+                }
             } else {
                 fallingSpeed += Physics.gravity.y * Time.deltaTime;
             }
 
             var velocity = Vector3.zero * _movementSpeed;
             velocity.y = fallingSpeed;
+
+            _animator.SetBool("onGround", _groundController.onGround);
         }
 
         private void Movement()
@@ -63,13 +77,12 @@ namespace Climb
 
             if(playerControl && movementInput.magnitude >= 0.1f)
             {
-                Debug.Log("MOVE");
                 // calc half Angle of 2 directions, and add Angle of camera y. this give me direction Angle of camera view
                 float targetAngle = Mathf.Atan2(movementInput.x, movementInput.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 _charcterController.Move(moveDir.normalized * _movementSpeed * Time.deltaTime);
             }
 

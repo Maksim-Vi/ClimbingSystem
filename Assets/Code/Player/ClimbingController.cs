@@ -13,6 +13,7 @@ namespace Climb
 
         [Header("Actions Area")]
         [SerializeField] private List<ObjectAction> actions;
+        [SerializeField] private ObjectAction jumpDownActions;
 
         private bool playerInAction = false;
 
@@ -21,6 +22,15 @@ namespace Climb
             if(Input.GetButton("Jump") && !playerInAction)
             {
                 OnClimbingJump();
+            }
+
+            if(!playerInAction && _playerController._playerOnLedge && Input.GetButtonDown("Jump"))
+            {
+                if(_playerController.ledgeInfo.angle <= 50)
+                {
+                    _playerController._playerOnLedge = false;
+                    StartCoroutine(OnAction(jumpDownActions));
+                }
             }
         }
 
@@ -34,7 +44,7 @@ namespace Climb
                 {
                     if(action.CheckAvailable(hitAreaData, transform))
                     {
-                        StartCoroutine(ClimbingAction(action));
+                        StartCoroutine(OnAction(action));
                         break;
                     }
                 }
@@ -46,7 +56,8 @@ namespace Climb
            _animator.MatchTarget(action.comparePos, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeigth, 0), action.CompareStartTime, action.CompareEndTime);
         }
 
-        IEnumerator ClimbingAction(ObjectAction action)
+
+        IEnumerator OnAction(ObjectAction action)
         {
             playerInAction = true;
             _playerController.SetControl(false);

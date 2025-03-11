@@ -269,7 +269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386515667}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24529392, y: -0.00000002070886, z: 0.0000000052398414, w: 0.96944875}
+  m_LocalRotation: {x: 0.24529393, y: 0.000000014838213, z: -0.000000003754426, w: 0.96944875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -869,8 +869,8 @@ Transform:
   m_GameObject: {fileID: 1053990827}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.05, y: 0.7997, z: 4.173}
-  m_LocalScale: {x: 1, y: 1.74, z: 1}
+  m_LocalPosition: {x: -2.57, y: 0.7997, z: 5.22}
+  m_LocalScale: {x: 2.176047, y: 1.74, z: 2.2731}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2073619728}
@@ -1001,7 +1001,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1128093449
 MeshRenderer:
@@ -1495,6 +1495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _charcterController: {fileID: 1278738941}
   _groundController: {fileID: 1278738943}
+  _environmentChecker: {fileID: 1278738944}
   _animator: {fileID: 1278738939}
   _camera: {fileID: 963194228}
   _movementSpeed: 4
@@ -1517,7 +1518,7 @@ MonoBehaviour:
   groundCheckOffset: {x: 0, y: 0.15, z: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   onGround: 0
 --- !u!114 &1278738944
 MonoBehaviour:
@@ -1536,7 +1537,9 @@ MonoBehaviour:
   higthRayLength: 3
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
+  ledgeRayLength: 11
+  ledgeRayHeightThreshold: 0.66
 --- !u!114 &1278738945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1558,6 +1561,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 575fd108130234bdbb26377a6a64af37, type: 2}
   - {fileID: 11400000, guid: f749bfa801e104e2ca4ea642a39c5383, type: 2}
   - {fileID: 11400000, guid: c6fa86f9b9f7946a2b697fdefe7bbb40, type: 2}
+  jumpDownActions: {fileID: 11400000, guid: 6475ec555a3b44cbdad2fd2fc2e2a87d, type: 2}
 --- !u!1001 &1306578142
 PrefabInstance:
   m_ObjectHideFlags: 0

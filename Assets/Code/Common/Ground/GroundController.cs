@@ -16,7 +16,7 @@ namespace Climb
             CheckIsGround();
         }
 
-        private void CheckIsGround()
+        public void CheckIsGround()
         {
             if(!_playerController.pControl) return;
 
