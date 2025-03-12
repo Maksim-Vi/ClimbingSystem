@@ -17,7 +17,7 @@ MonoBehaviour:
   minHeight: 1
   maxHeight: 2
   lookAtObject: 1
-  delayAfterAnimation: 0.5
+  delayAfterAnimation: 1.2
   allowTargetMathing: 1
   compareBodyPart: 4
   compareStartTime: 0.08

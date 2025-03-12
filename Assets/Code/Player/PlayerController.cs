@@ -29,6 +29,8 @@ namespace Climb
         [HideInInspector] public bool _playerOnLedge {get; set;} = false;
         private LedgeInfo _ledgeInfo {get; set; }
         private Vector3 moveDir;
+        private Vector3 velocity;
+        private bool _playerCanMove = true;
         private float turnSmoothVelocity;
 
         private void Start() 
@@ -37,7 +39,7 @@ namespace Climb
         }
 
         private void Update() 
-        {          
+        {    
             Movement();
             GravityPlayer();
         }
@@ -49,18 +51,12 @@ namespace Climb
             if(_groundController.onGround)
             {
                 fallingSpeed = 0f;
-                _playerOnLedge = _environmentChecker.CheckLedge(moveDir.normalized, out LedgeInfo ledgeInfo);
-                if(_playerOnLedge)
-                {
-                    _ledgeInfo = ledgeInfo;
-
-                    Debug.Log("playerOnLedge is true");
-                }
+                CheckLedgeMovement();
             } else {
                 fallingSpeed += Physics.gravity.y * Time.deltaTime;
             }
 
-            var velocity = Vector3.zero * _movementSpeed;
+            velocity = moveDir * _movementSpeed;
             velocity.y = fallingSpeed;
 
             _animator.SetBool("onGround", _groundController.onGround);
@@ -81,9 +77,10 @@ namespace Climb
                 float targetAngle = Mathf.Atan2(movementInput.x, movementInput.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
+                     
                 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                _charcterController.Move(moveDir.normalized * _movementSpeed * Time.deltaTime);
+               
+               _charcterController.Move(velocity * Time.deltaTime);
             }
 
             SetAnimation(movementAmount);
@@ -92,6 +89,30 @@ namespace Climb
         private void SetAnimation(float val)
         {
             _animator.SetFloat("MovementValue", val, 0.2f, Time.deltaTime);
+        }
+
+        void CheckLedgeMovement()
+        {
+            if(!_groundController.onGround || !playerControl) return;
+
+            _playerOnLedge = _environmentChecker.CheckLedge(moveDir.normalized, out LedgeInfo ledgeInfo);
+            if(_playerOnLedge)
+            {
+                _ledgeInfo = ledgeInfo;
+                
+                float angle = Vector3.Angle(_ledgeInfo.groundHit.normal, moveDir);
+
+                if(angle < 90)
+                {
+                    Debug.Log("On End Ledge");
+                    _playerCanMove = false;
+                    velocity = Vector3.zero;         
+                    moveDir = Vector3.zero;
+                    return;
+                } 
+            }
+
+            _playerCanMove = true;
         }
 
         public void SetControl(bool hasControl)

@@ -12,7 +12,8 @@ namespace Climb
         [Header("Check Ledge")]
         [SerializeField] private float ledgeRayLength = 1f;
         [SerializeField] private float ledgeRayHeightThreshold = 0.76f;
-
+        
+        private Vector3 mDirection;
 
         public ObjectObstacleInfo CheckObsticle()
         {
@@ -39,17 +40,14 @@ namespace Climb
             ledgeInfo = new LedgeInfo();
             if(moveDirection == Vector3.zero) return false;
 
-            float ledgeOriginOffset = 0.5f;
+            float ledgeOriginOffset = 0.3f;
             var ledgeOrigin = transform.position + moveDirection * ledgeOriginOffset;
 
-           
             if(Physics.Raycast(ledgeOrigin, Vector3.down, out RaycastHit hit, ledgeRayLength, obstacleMask))
             { 
-                Debug.DrawRay(ledgeOrigin, Vector3.down * ledgeRayLength, Color.red);
-
                 var groundRaycastOrigin = transform.position + moveDirection - new Vector3(0,0.1f,0);
-                if(Physics.Raycast(groundRaycastOrigin, -moveDirection, out RaycastHit groundHit, 2, obstacleMask))
-                {
+                if(Physics.Raycast(groundRaycastOrigin, -moveDirection, out RaycastHit groundHit, 2f, obstacleMask))
+                {               
                     float LedgeHight = transform.position.y - hit.point.y;
                     if(LedgeHight > ledgeRayHeightThreshold)
                     {
@@ -62,6 +60,11 @@ namespace Climb
             }
 
             return false;
+        }
+
+        void OnDrawGizmos()
+        {
+           
         }
     }
 
