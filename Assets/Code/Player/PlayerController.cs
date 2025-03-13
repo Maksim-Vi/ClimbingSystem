@@ -30,7 +30,6 @@ namespace Climb
         private LedgeInfo _ledgeInfo {get; set; }
         private Vector3 moveDir;
         private Vector3 velocity;
-        private bool _playerCanMove = true;
         private float turnSmoothVelocity;
 
         private void Start() 
@@ -48,15 +47,19 @@ namespace Climb
         {
             if(!playerControl) return;
 
+            velocity = Vector3.zero;
+
             if(_groundController.onGround)
             {
                 fallingSpeed = 0f;
+                velocity = moveDir * _movementSpeed;
                 CheckLedgeMovement();
+
+                SetAnimation(velocity.magnitude / _movementSpeed);
             } else {
                 fallingSpeed += Physics.gravity.y * Time.deltaTime;
+                velocity = transform.forward * _movementSpeed / 2;
             }
-
-            velocity = moveDir * _movementSpeed;
             velocity.y = fallingSpeed;
 
             _animator.SetBool("onGround", _groundController.onGround);
@@ -81,9 +84,9 @@ namespace Climb
                 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                
                _charcterController.Move(velocity * Time.deltaTime);
+            } else {
+                moveDir = Vector3.zero;
             }
-
-            SetAnimation(movementAmount);
         }
 
         private void SetAnimation(float val)
@@ -105,14 +108,11 @@ namespace Climb
                 if(angle < 90)
                 {
                     Debug.Log("On End Ledge");
-                    _playerCanMove = false;
                     velocity = Vector3.zero;         
                     moveDir = Vector3.zero;
                     return;
                 } 
             }
-
-            _playerCanMove = true;
         }
 
         public void SetControl(bool hasControl)

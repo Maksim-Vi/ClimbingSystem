@@ -41,7 +41,7 @@ namespace Climb
             if(moveDirection == Vector3.zero) return false;
 
             float ledgeOriginOffset = 0.3f;
-            var ledgeOrigin = transform.position + moveDirection * ledgeOriginOffset;
+            var ledgeOrigin = transform.position + moveDirection * ledgeOriginOffset + Vector3.up;
 
             if(Physics.Raycast(ledgeOrigin, Vector3.down, out RaycastHit hit, ledgeRayLength, obstacleMask))
             { 
