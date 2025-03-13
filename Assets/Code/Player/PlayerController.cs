@@ -118,13 +118,17 @@ namespace Climb
         public void SetControl(bool hasControl)
         {
             playerControl = hasControl;
-            // _charcterController.enabled = hasControl;
 
             if(!hasControl)
             {
                 _animator.SetFloat("MovementValue", 0f);
-                //requireRotation = transform.rotation;
             }
+        }
+
+        public bool HashPalyerControl
+        {
+            get => playerControl;
+            set => playerControl = value;
         }
     }
 }

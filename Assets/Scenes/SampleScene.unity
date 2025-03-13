@@ -976,7 +976,7 @@ Transform:
   m_GameObject: {fileID: 1128093446}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.882, y: 0.5592, z: 2.72}
+  m_LocalPosition: {x: -7.882, y: 0.822, z: 2.72}
   m_LocalScale: {x: 0.20531, y: 1.2784462, z: 2.8813}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1539,7 +1539,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   ledgeRayLength: 11
-  ledgeRayHeightThreshold: 0.76
+  ledgeRayHeightThreshold: 1.2
 --- !u!114 &1278738945
 MonoBehaviour:
   m_ObjectHideFlags: 0
