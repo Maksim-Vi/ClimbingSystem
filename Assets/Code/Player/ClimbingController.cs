@@ -15,16 +15,14 @@ namespace Climb
         [SerializeField] private List<ObjectAction> actions;
         [SerializeField] private ObjectAction jumpDownActions;
 
-        private bool playerInAction = false;
-
         private void Update()
         {
-            if(Input.GetButton("Jump") && !playerInAction)
+            if(Input.GetButton("Jump") && !_playerController.playerInAction)
             {
                 OnClimbingJump();
             }
 
-            if(!playerInAction && _playerController._playerOnLedge && Input.GetButtonDown("Jump"))
+            if(!_playerController.playerInAction && _playerController._playerOnLedge && Input.GetButtonDown("Jump"))
             {
                 if(_playerController.ledgeInfo.angle <= 50)
                 {
@@ -51,57 +49,34 @@ namespace Climb
             }
         }
 
-        void CompareTarget(ObjectAction action)
-        {
-           _animator.MatchTarget(action.comparePos, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeigth, 0), action.CompareStartTime, action.CompareEndTime);
-        }
+        // void CompareTarget(ObjectAction action)
+        // {
+        //    _animator.MatchTarget(action.comparePos, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeigth, 0), action.CompareStartTime, action.CompareEndTime);
+        // }
 
 
         IEnumerator OnAction(ObjectAction action)
         {
-            playerInAction = true;
             _playerController.SetControl(false);
 
-            _animator.CrossFade(action.AnimationName, 0f);
+            CompereTargetParameter param = null;
 
-            yield return null;
-
-            var animationState = _animator.GetNextAnimatorStateInfo(0);
-
-            if(!animationState.IsName(action.AnimationName))
+            if(action.AllowTargetMathing)
             {
-                Debug.LogWarning("Wrong animation name =>" + action.AnimationName);
+                param = new CompereTargetParameter()
+                {
+                    position = action.comparePos,
+                    bodyPart = action.CompareBodyPart,
+                    positionWeight = action.ComparePositionWeigth,
+                    startTime = action.CompareStartTime,
+                    endTime = action.CompareEndTime,
+                };
             }
 
-
-            float time = 0f;
-
-            while(time <= animationState.length)
-            {
-                time += Time.deltaTime;
-
-                if(action.LookAtObject)
-                {
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, action.RequireRotation, _playerController.rotSpeed * Time.deltaTime);
-                }
-
-                if(action.AllowTargetMathing)
-                {
-                    CompareTarget(action);
-                }
-
-                if(_animator.IsInTransition(0) && time > 0.7f)
-                {
-                    break;
-                }
-
-                yield return null;
-            }
-
-            yield return new WaitForSeconds(action.DelayAfterAnimation);
-                       
+            yield return _playerController.OnAction(action.AnimationName, param, action.RequireRotation, action.LookAtObject, action.DelayAfterAnimation);
+        
+   
             _playerController.SetControl(true);
-            playerInAction = false;
         }
     }
 }

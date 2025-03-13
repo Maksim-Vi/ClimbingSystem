@@ -1,3 +1,4 @@
+using System.Collections;
 using KBCore.Refs;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Climb
     {
         public bool pControl => playerControl;
         public float rotSpeed => _rotSpeed;
+        public bool playerInAction => _playerInAction;
         public LedgeInfo ledgeInfo => _ledgeInfo;
 
         [Header("Player")]        
@@ -26,6 +28,7 @@ namespace Climb
         [SerializeField] private float fallingSpeed;
 
         private bool playerControl = false;
+        private bool _playerInAction = false;
         [HideInInspector] public bool _playerOnLedge {get; set;} = false;
         private LedgeInfo _ledgeInfo {get; set; }
         private Vector3 moveDir;
@@ -125,10 +128,73 @@ namespace Climb
             }
         }
 
+        public IEnumerator OnAction(string animationName, CompereTargetParameter param, Quaternion requireRotation, bool lookAtObject = false, float DelayAfterAnimation = 0f)
+        {
+            _playerInAction = true;
+            SetControl(false);
+
+            _animator.CrossFade(animationName, 0f);
+
+            yield return null;
+
+            var animationState = _animator.GetNextAnimatorStateInfo(0);
+
+            if(!animationState.IsName(animationName))
+            {
+                Debug.LogWarning("Wrong animation name =>" + animationName);
+            }
+
+
+            float time = 0f;
+
+            while(time <= animationState.length)
+            {
+                time += Time.deltaTime;
+
+                if(lookAtObject)
+                {
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, requireRotation, rotSpeed * Time.deltaTime);
+                }
+
+                if(param != null)
+                {
+                    CompareTarget(param);
+                }
+
+                if(_animator.IsInTransition(0) && time > 0.7f)
+                {
+                    break;
+                }
+
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(DelayAfterAnimation);
+                       
+            SetControl(true);
+            _playerInAction = false;
+        }
+
+        void CompareTarget(CompereTargetParameter param)
+        {
+           _animator.MatchTarget(param.position, transform.rotation, param.bodyPart, new MatchTargetWeightMask(param.positionWeight, 0), param.startTime, param.endTime);
+        }
+
+
         public bool HashPalyerControl
         {
             get => playerControl;
             set => playerControl = value;
         }
     }
+}
+
+public class CompereTargetParameter
+{
+    public Vector3 position;
+    public AvatarTarget bodyPart;
+    public Vector3 positionWeight;
+    public float startTime;
+    public float endTime;
+
 }
