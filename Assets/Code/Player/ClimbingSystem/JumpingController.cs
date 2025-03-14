@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Climb
 {
-    public class ClimbingController : MonoBehaviour
+    public class JumpingController : MonoBehaviour
     {
         [SerializeField, Self] public PlayerController _playerController;
         [SerializeField, Self] public EnvironmentChecker _environmentChecker;
@@ -17,12 +17,12 @@ namespace Climb
 
         private void Update()
         {
-            if(Input.GetButton("Jump") && !_playerController.playerInAction)
+            if(Input.GetButton("Jump") && !_playerController._playerInAction)
             {
                 OnClimbingJump();
             }
 
-            if(!_playerController.playerInAction && _playerController._playerOnLedge && Input.GetButtonDown("Jump"))
+            if(!_playerController._playerInAction && _playerController._playerOnLedge && Input.GetButtonDown("Jump"))
             {
                 if(_playerController.ledgeInfo.angle <= 50)
                 {
@@ -48,12 +48,6 @@ namespace Climb
                 }
             }
         }
-
-        // void CompareTarget(ObjectAction action)
-        // {
-        //    _animator.MatchTarget(action.comparePos, transform.rotation, action.CompareBodyPart, new MatchTargetWeightMask(action.ComparePositionWeigth, 0), action.CompareStartTime, action.CompareEndTime);
-        // }
-
 
         IEnumerator OnAction(ObjectAction action)
         {

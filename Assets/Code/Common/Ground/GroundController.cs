@@ -18,7 +18,7 @@ namespace Climb
 
         public void CheckIsGround()
         {
-            if(!_playerController.pControl) return;
+            if(!_playerController.playerControl) return;
 
             onGround = Physics.CheckSphere(transform.TransformPoint(groundCheckOffset), groundCheckRadius, groundLayer);
         }

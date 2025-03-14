@@ -16,8 +16,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -60,7 +58,7 @@ ModelImporter:
       - time: 0.19059406
         functionName: ThrowLedgeTarget
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: a4b46c07d000c430dbf933b44754a04c, type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

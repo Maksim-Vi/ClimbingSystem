@@ -6,10 +6,15 @@ namespace Climb
 {
     public class PlayerController : ValidatedMonoBehaviour
     {
-        public bool pControl => playerControl;
+        public bool playerControl => _playerControl;
         public float rotSpeed => _rotSpeed;
-        public bool playerInAction => _playerInAction;
         public LedgeInfo ledgeInfo => _ledgeInfo;
+
+        private bool _playerControl = false;
+        [HideInInspector] public bool _playerInAction {get; set;}= false;
+        [HideInInspector] public bool _playerOnLedge {get; set;} = false;
+        [HideInInspector] public bool _playerHanging {get; set;} = false;
+
 
         [Header("Player")]        
         [SerializeField, Self] private CharacterController _charcterController;
@@ -27,9 +32,6 @@ namespace Climb
         [Header("Player Gravity and Collision")]
         [SerializeField] private float fallingSpeed;
 
-        private bool playerControl = false;
-        private bool _playerInAction = false;
-        [HideInInspector] public bool _playerOnLedge {get; set;} = false;
         private LedgeInfo _ledgeInfo {get; set; }
         private Vector3 moveDir;
         private Vector3 velocity;
@@ -37,7 +39,7 @@ namespace Climb
 
         private void Start() 
         {
-            playerControl = true;
+            _playerControl = true;
         }
 
         private void Update() 
@@ -48,7 +50,7 @@ namespace Climb
 
         private void GravityPlayer()
         {
-            if(!playerControl) return;
+            if(!_playerControl || _playerHanging) return;
 
             velocity = Vector3.zero;
 
@@ -77,7 +79,7 @@ namespace Climb
             
             var movementInput = new Vector3(horizontal, 0, vertical).normalized;
 
-            if(playerControl && movementInput.magnitude >= 0.1f)
+            if(_playerControl && movementInput.magnitude >= 0.1f)
             {
                 // calc half Angle of 2 directions, and add Angle of camera y. this give me direction Angle of camera view
                 float targetAngle = Mathf.Atan2(movementInput.x, movementInput.z) * Mathf.Rad2Deg + _camera.eulerAngles.y;
@@ -99,7 +101,7 @@ namespace Climb
 
         void CheckLedgeMovement()
         {
-            if(!_groundController.onGround || !playerControl) return;
+            if(!_groundController.onGround || !_playerControl) return;
 
             _playerOnLedge = _environmentChecker.CheckLedge(moveDir.normalized, out LedgeInfo ledgeInfo);
             if(_playerOnLedge)
@@ -110,7 +112,6 @@ namespace Climb
 
                 if(angle < 90)
                 {
-                    Debug.Log("On End Ledge");
                     velocity = Vector3.zero;         
                     moveDir = Vector3.zero;
                     return;
@@ -120,7 +121,8 @@ namespace Climb
 
         public void SetControl(bool hasControl)
         {
-            playerControl = hasControl;
+            _playerControl = hasControl;
+            // _charcterController.enabled = hasControl;
 
             if(!hasControl)
             {
@@ -183,8 +185,8 @@ namespace Climb
 
         public bool HashPalyerControl
         {
-            get => playerControl;
-            set => playerControl = value;
+            get => _playerControl;
+            set => _playerControl = value;
         }
     }
 }
